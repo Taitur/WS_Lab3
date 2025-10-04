@@ -47,6 +47,18 @@ setInterval(moveActivePokemon, 10);
 // Instantiate Pokémon
 const pokemonNames = ['pikachu', 'bulbasaur', 'charmander', 'squirtle', 'jigglypuff'];
 
-pokemonNames.forEach(name => {
-    //Solicita al servidor externo la imagen del pokemon correspondiente y genera el pokemon
-});
+function cargarJuego () {
+
+  // llamar a loadImage
+
+  pokemonNames.forEach(name => {
+      //Solicita al servidor externo la imagen del pokemon correspondiente y genera el pokemon
+  });
+
+
+
+}
+
+function loadImage (url) {
+ /// desarrolla la promesa
+}
