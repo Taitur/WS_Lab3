@@ -50,11 +50,10 @@ class Pokemon {
 window.onload = sortuEtaHasi;
 function sortuEtaHasi() {
   let botoia = document.getElementById("buscarPokemon");
-  
   botoia.onclick = cargarJuego;
 }
-  
-  
+
+
 
 
 document.addEventListener('keydown', function (event) {
@@ -85,11 +84,10 @@ const pokemonNames = ['pikachu', 'bulbasaur', 'charmander', 'squirtle', 'jigglyp
 function cargarJuego() {
   let checkbox = document.getElementById("shiny");
   // llamar a loadImage
-  loadImage("https://preview.redd.it/dnlz6c3xni951.jpg?width=1080&crop=smart&auto=webp&s=84af1d3e4e27eddc5c612a7b75244a9886389f77")
-    .then(img => document.body.appendChild(img)).catch(err => console.error(err));
+  loadImage("https://preview.redd.it/dnlz6c3xni951.jpg?width=1080&crop=smart&auto=webp&s=84af1d3e4e27eddc5c612a7b75244a9886389f77").then(img => document.body.appendChild(img)).catch(err => console.log("No va"+err));
   pokemonNames.forEach(name => {
     //Solicita al servidor externo la imagen del pokemon correspondiente y genera el pokemon
-    const res = fetch("https://pokeapi.co/api/v2/pokemon/" + name).then(response => response.json()).then(data => {
+    fetch("https://pokeapi.co/api/v2/pokemon/" + name).then(response => response.json()).then(data => {
       if (!checkbox.checked) {
         new Pokemon(name, data.sprites.front_default);
       } else {
@@ -104,9 +102,10 @@ function cargarJuego() {
 function loadImage(url) {
   /// desarrolla la promesa
   return new Promise(resolve => {
-    let irudia = new Image()
-    irudia.src = url
-    irudia.width
-    irudia.height
+    const image = new Image();
+    image.addEventListener('load', () => { resolve(image) });
+    image.addEventListener('error', () => reject(console.log("Error al cargar la imagen")));
+    image.src = url;
   });
+  ;
 }
