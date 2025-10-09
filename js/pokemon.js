@@ -48,6 +48,7 @@ class Pokemon {
   }
 } // end of Pokemon class
 
+document.addEventListener('DOMContentLoaded', cargarJuego);
 
 document.addEventListener('keydown', function (event) {
 
@@ -81,7 +82,10 @@ function cargarJuego() {
     .then(img => document.body.appendChild(img)).catch (err => console.error(err));
   pokemonNames.forEach(name => {
     //Solicita al servidor externo la imagen del pokemon correspondiente y genera el pokemon
-    fetch("https://pokeapi.co/api/v2/pokemon/" + name).then(response => response.json()).then(irudia => irudia.sprites.front_default)
+    const res = fetch("https://pokeapi.co/api/v2/pokemon/" + name).then(response => response.json()).then(data => {
+      const spriteUrl = data.sprites.front_default;
+      new Pokemon(name, spriteUrl);
+    }).catch(err => console.error(err));
 
   });
 
