@@ -82,7 +82,13 @@ setInterval(moveActivePokemon, 10);
 const pokemonNames = ['pikachu', 'bulbasaur', 'charmander', 'squirtle', 'jigglypuff'];
 
 function cargarJuego() {
+  let irudiak = document.getElementsByTagName("img");
+  while(irudiak.length > 0){
+    irudiak[0].parentNode.removeChild(irudiak[0]);
+  }
+  console.log(irudiak)
   let checkbox = document.getElementById("shiny");
+  
   // llamar a loadImage
   loadImage("https://preview.redd.it/dnlz6c3xni951.jpg?width=1080&crop=smart&auto=webp&s=84af1d3e4e27eddc5c612a7b75244a9886389f77").then(img => document.body.appendChild(img)).catch(err => console.log("No va"+err));
   pokemonNames.forEach(name => {
