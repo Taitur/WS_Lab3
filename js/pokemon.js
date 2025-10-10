@@ -47,6 +47,7 @@ class Pokemon {
       this.element.style.left = (left + step) + 'px';
   }
 } // end of Pokemon class
+
 window.onload = sortuEtaHasi;
 function sortuEtaHasi() {
   let botoia = document.getElementById("buscarPokemon");
@@ -76,22 +77,20 @@ function moveActivePokemon() {
 
 }
 
+
+
 setInterval(moveActivePokemon, 10);
 
 // Instantiate Pokémon
 const pokemonNames = ['pikachu', 'bulbasaur', 'charmander', 'squirtle', 'jigglypuff'];
+let initialgen = false;
 
-function cargarJuego() {
-  let irudiak = document.getElementsByTagName("img");
-  while(irudiak.length > 0){
-    irudiak[0].parentNode.removeChild(irudiak[0]);
-  }
-  console.log(irudiak)
+function generatePokemons(){
+
+  let input = document.getElementById("textbox").value.toLowerCase();
   let checkbox = document.getElementById("shiny");
-  
-  // llamar a loadImage
-  loadImage("https://preview.redd.it/dnlz6c3xni951.jpg?width=1080&crop=smart&auto=webp&s=84af1d3e4e27eddc5c612a7b75244a9886389f77").then(img => document.body.appendChild(img)).catch(err => console.log("No va"+err));
-  pokemonNames.forEach(name => {
+  if(!initialgen){
+    pokemonNames.forEach(name => {
     //Solicita al servidor externo la imagen del pokemon correspondiente y genera el pokemon
     fetch("https://pokeapi.co/api/v2/pokemon/" + name).then(response => response.json()).then(data => {
       if (!checkbox.checked) {
@@ -100,8 +99,33 @@ function cargarJuego() {
         new Pokemon(name, data.sprites.front_shiny);
       }
     }).catch(err => console.error(err));
+    
+    });
+    initialgen = true;
+  }else{
+    fetch("https://pokeapi.co/api/v2/pokemon/" + input).then(response => response.json()).then(data => {
+      if (!checkbox.checked) {
+        new Pokemon(input, data.sprites.front_default);
+      } else {
+        new Pokemon(input, data.sprites.front_shiny);
+      }
+    }).catch(err => console.error(err));
+  }
+  
+}
 
-  });
+function cargarJuego() {
+  let irudiak = document.getElementsByTagName("img");
+  let fondoa = irudiak.filter(img => {return img.src=="https://preview.redd.it/dnlz6c3xni951.jpg?width=1080&crop=smart&auto=webp&s=84af1d3e4e27eddc5c612a7b75244a9886389f77"}) //Filter bidez src https://preview.redd.it/dnlz6c3xni951.jpg?width=1080&crop=smart&auto=webp&s=84af1d3e4e27eddc5c612a7b75244a9886389f77" duen irudia bilatu
+  
+  console.log(irudiak)
+  
+  
+  // llamar a loadImage
+  if(fondoa.length==0){
+    loadImage("https://preview.redd.it/dnlz6c3xni951.jpg?width=1080&crop=smart&auto=webp&s=84af1d3e4e27eddc5c612a7b75244a9886389f77").then(img => document.body.appendChild(img)).catch(err => console.log("No va"+err));
+  }
+  generatePokemons();
 
 }
 
