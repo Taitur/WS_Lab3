@@ -103,22 +103,27 @@ function generatePokemons(){
     });
     initialgen = true;
   }else{
-    fetch("https://pokeapi.co/api/v2/pokemon/" + input).then(response => response.json()).then(data => {
+    if(input!=""){
+     fetch("https://pokeapi.co/api/v2/pokemon/" + input).then(response => response.json()).then(data => {
       if (!checkbox.checked) {
         new Pokemon(input, data.sprites.front_default);
       } else {
         new Pokemon(input, data.sprites.front_shiny);
       }
     }).catch(err => console.error(err));
+    } else {
+      alert("Sar ezazu Pokemon baten izena, sortzeko irudia")
+    }
+    
   }
   
 }
 
 function cargarJuego() {
-  let irudiak = document.getElementsByTagName("img");
+  let irudiak = Array.from(document.getElementsByTagName("img"));
   let fondoa = irudiak.filter(img => {return img.src=="https://preview.redd.it/dnlz6c3xni951.jpg?width=1080&crop=smart&auto=webp&s=84af1d3e4e27eddc5c612a7b75244a9886389f77"}) //Filter bidez src https://preview.redd.it/dnlz6c3xni951.jpg?width=1080&crop=smart&auto=webp&s=84af1d3e4e27eddc5c612a7b75244a9886389f77" duen irudia bilatu
   
-  console.log(irudiak)
+  console.log(fondoa)
   
   
   // llamar a loadImage
